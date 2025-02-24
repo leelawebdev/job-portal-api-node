@@ -10,6 +10,22 @@ class CandidateProfile {
       data: candidateProfile
     });
   }
+
+  public async getAll(req: Request, res: Response, next: NextFunction) {
+    const candidates = await candidateProfileService.getAllCandidates();
+    res.status(StatusCodes.OK).json({
+      message: 'Candidate Profiles Got Successfully',
+      data: candidates
+    });
+  }
+
+  public async getSingleCandidate(req: Request, res: Response, next: NextFunction) {
+    const candidate = await candidateProfileService.getSingleCandidate(+req.params.id);
+    res.status(StatusCodes.OK).json({
+      message: 'Single Candidate Profile',
+      data: candidate
+    });
+  }
 }
 
 export default new CandidateProfile();
