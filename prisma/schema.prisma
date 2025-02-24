@@ -20,10 +20,29 @@ model User {
   email String @unique
   password String
   role Role @default(CANDIDATE)
-  createdAt DateTime @default(now())
-  updatedAt DateTime? @updatedAt 
-  status Boolean
-  
+  created_at DateTime @default(now())
+  updated_at DateTime? @updatedAt 
+  is_active Boolean @default(true)
+  canditateProfile CandidateProfile?
+}
+
+model CandidateProfile {
+  id Int @id @default(autoincrement())
+  fullName String
+  gender Gender
+  phone String
+  cv String
+  birthDate DateTime
+  address String
+  openToWork Boolean @default(false)
+  status Boolean @default(true)
+  userId Int @unique
+  user User @relation(fields: [userId], references: [id])
+}
+
+enum Gender {
+  MALE
+  FEMALE
 }
 
 enum Role {

@@ -13,8 +13,7 @@ class UserService {
       name,
       email,
       password,
-      role: 'CANDIDATE',
-      status: true
+      role: 'CANDIDATE'
     };
 
     return await prisma.user.create({

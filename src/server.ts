@@ -3,6 +3,7 @@ import 'dotenv/config';
 import appRoutes from './shared/routes/appRoutes';
 import { ReasonPhrases, StatusCodes } from 'http-status-codes';
 import { CustomError } from './shared/cores/error.core';
+import cookieParser from 'cookie-parser';
 
 export default class Server {
   private app: Application;
@@ -19,6 +20,7 @@ export default class Server {
 
   private setupMiddlewares() {
     this.app.use(express.json());
+    this.app.use(cookieParser());
   }
 
   private setupRoutes() {
