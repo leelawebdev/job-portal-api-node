@@ -26,6 +26,16 @@ class CandidateProfile {
       data: candidate
     });
   }
+
+  public async update(req: Request, res: Response, next: NextFunction) {
+    console.log('dsdsdd');
+    const candidate = await candidateProfileService.update(+req.params.id, req.body);
+    console.log('kjkjkjk');
+    res.status(StatusCodes.OK).json({
+      message: 'profile update successfully',
+      data: candidate
+    });
+  }
 }
 
 export default new CandidateProfile();

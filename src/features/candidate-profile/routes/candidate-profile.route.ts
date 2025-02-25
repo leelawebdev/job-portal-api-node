@@ -5,8 +5,13 @@ import candidateProfileController from '../controllers/candidate-profile.control
 
 const candidateProfileRoutes = express.Router();
 
-candidateProfileRoutes.post('/', verifyUser, asyncWrapper(candidateProfileController.create));
-candidateProfileRoutes.get('/', verifyUser, asyncWrapper(candidateProfileController.getAll));
-candidateProfileRoutes.get('/:id', verifyUser, asyncWrapper(candidateProfileController.getSingleCandidate));
+candidateProfileRoutes.post('/', asyncWrapper(verifyUser), asyncWrapper(candidateProfileController.create));
+candidateProfileRoutes.get('/', asyncWrapper(verifyUser), asyncWrapper(candidateProfileController.getAll));
+candidateProfileRoutes.get(
+  '/:id',
+  asyncWrapper(verifyUser),
+  asyncWrapper(candidateProfileController.getSingleCandidate)
+);
+candidateProfileRoutes.patch('/:id', asyncWrapper(verifyUser), asyncWrapper(candidateProfileController.update));
 
 export default candidateProfileRoutes;

@@ -21,7 +21,7 @@ class CandidateProfileService {
   }
 
   public async getAllCandidates() {
-    return await prisma.user.findMany();
+    return await prisma.candidateProfile.findMany();
   }
 
   public async getSingleCandidate(id: number) {
@@ -33,6 +33,32 @@ class CandidateProfileService {
 
     if (!candidate) throw new BadRequestException(`Candidate with Id ${id} doesnt exist`);
     return candidate;
+  }
+
+  public async update(id: number, requestBody: any) {
+    try {
+      const { fullName, gender, phone, cv, birthDate, address } = requestBody;
+      console.log(requestBody);
+      await this.getSingleCandidate(id);
+      console.log('dsdsdsddsdsd');
+
+      const candiate = await prisma.candidateProfile.update({
+        where: { id },
+        data: {
+          fullName,
+          gender,
+          phone,
+          cv,
+          birthDate: new Date(birthDate),
+          address
+        }
+      });
+      console.log(candiate);
+      return candiate;
+    } catch (e) {
+      console.log(e);
+      throw new BadRequestException('NOt found error');
+    }
   }
 }
 
