@@ -38,6 +38,35 @@ model CandidateProfile {
   status Boolean @default(true)
   userId Int @unique
   user User @relation(fields: [userId], references: [id])
+  CandidateLanguages CandidateLanguages[]
+}
+
+
+model Language {
+  id Int @id @default(autoincrement())
+  name String @unique
+  created_at DateTime @default(now())
+  updated_at DateTime? @updatedAt 
+  CandidateLanguages CandidateLanguages[]
+}
+
+
+model CandidateLanguages {
+  id Int @id @default(autoincrement())
+  candidateProfileId Int
+  candidateProfile CandidateProfile @relation(fields: [candidateProfileId], references: [id])
+  languageId Int
+  language Language @relation(fields: [languageId], references: [id])
+  level Level
+
+  @@unique([candidateProfileId, languageId])
+}
+
+enum Level {
+  BASIC
+  INTERMEDIATE
+  ADVANCED
+  FLUENT
 }
 
 enum Gender {

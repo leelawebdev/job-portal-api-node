@@ -1,8 +1,10 @@
+import { NextFunction } from 'express';
 import prisma from '~/prisma';
 import { BadRequestException } from '~/shared/cores/error.core';
+import { ICandidateProfile } from '../interfaces/candidate-profile.interface';
 
 class CandidateProfileService {
-  public async create(requestBody: any, currentUser: UserPayload) {
+  public async create(requestBody: ICandidateProfile, currentUser: UserPayload) {
     const { fullName, gender, phone, cv, birthDate, address } = requestBody;
 
     const candidateProfile = await prisma.candidateProfile.create({
@@ -35,7 +37,7 @@ class CandidateProfileService {
     return candidate;
   }
 
-  public async update(id: number, requestBody: any) {
+  public async update(id: number, requestBody: ICandidateProfile) {
     try {
       const { fullName, gender, phone, cv, birthDate, address } = requestBody;
       console.log(requestBody);
@@ -59,6 +61,16 @@ class CandidateProfileService {
       console.log(e);
       throw new BadRequestException('NOt found error');
     }
+  }
+
+  public async delete(id: number) {
+    await this.getSingleCandidate(id);
+
+    await prisma.candidateProfile.delete({
+      where: {
+        id
+      }
+    });
   }
 }
 

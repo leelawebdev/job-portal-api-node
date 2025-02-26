@@ -28,12 +28,18 @@ class CandidateProfile {
   }
 
   public async update(req: Request, res: Response, next: NextFunction) {
-    console.log('dsdsdd');
     const candidate = await candidateProfileService.update(+req.params.id, req.body);
-    console.log('kjkjkjk');
+
     res.status(StatusCodes.OK).json({
       message: 'profile update successfully',
       data: candidate
+    });
+  }
+
+  public async delete(req: Request, res: Response, next: NextFunction) {
+    await candidateProfileService.delete(+req.params.id);
+    res.status(StatusCodes.OK).json({
+      message: 'profile deleted successfully'
     });
   }
 }
